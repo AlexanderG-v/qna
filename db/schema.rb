@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2021_12_23_150444) do
     t.bigint "question_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["body"], name: "index_answers_on_body"
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
@@ -28,6 +29,7 @@ ActiveRecord::Schema.define(version: 2021_12_23_150444) do
     t.text "body", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["title"], name: "index_questions_on_title"
   end
 
   add_foreign_key "answers", "questions"
