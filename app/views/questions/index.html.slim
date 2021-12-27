@@ -1,7 +1,5 @@
 h1 All Questions
 
-p= link_to 'Ask question', new_question_path
-
 table 
   thead
     tr
@@ -9,3 +7,5 @@ table
   - @questions.each do |question|
     tr
       td = question.title
+
+p= link_to 'Ask question', new_question_path
