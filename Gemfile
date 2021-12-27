@@ -24,6 +24,9 @@ gem 'jbuilder', '~> 2.7'
 # template engine slim
 gem 'slim-rails'
 
+# AUTH
+gem 'devise', '~> 4.0'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -64,6 +67,8 @@ group :test do
   # provides RSpec and Minitest compatible one-liners for testing the general Rails functionality
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
+  # auxiliary class for running cross-platform applications
+  gem 'launchy'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
