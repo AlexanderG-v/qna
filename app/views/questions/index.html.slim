@@ -6,6 +6,7 @@ table
       th Title
   - @questions.each do |question|
     tr
-      td = question.title
+      td = question.title 
+      td = link_to 'Show', question_path(question)
 
 p= link_to 'Ask question', new_question_path

@@ -1,2 +1,10 @@
 h1= @question.title
-p= @question.body
+h2= @question.body
+
+h3 'All answer'
+
+div
+  - @question.answers.each do |answer|
+        p= answer.body
+
+  = render 'answers/form'
