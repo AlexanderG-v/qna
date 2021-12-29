@@ -1,12 +1,10 @@
 h1 All Questions
 
-table 
-  thead
-    tr
-      th Title
-  - @questions.each do |question|
-    tr
-      td = question.title 
-      td = link_to 'Show', question_path(question)
-
 p= link_to 'Ask question', new_question_path
+
+table
+  tr
+    th Title
+    th colspan=1 Actions
+
+  = render @questions

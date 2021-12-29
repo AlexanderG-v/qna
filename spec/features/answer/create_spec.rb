@@ -16,7 +16,7 @@ feature 'User being on question page can write an answer to question', "
     end
 
     scenario 'creates an answer to the question' do
-      fill_in 'Body', with: 'text text text'
+      fill_in 'answer[body]', with: 'text text text'
       click_on 'Answer'
 
       expect(page).to have_content 'Your answer successfully created.'

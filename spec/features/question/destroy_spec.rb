@@ -22,8 +22,6 @@ feature 'Author can delete his question', "
     sign_in(not_author)
     visit question_path(question)
 
-    click_on 'Delete Question'
-
-    expect(page).to have_content 'You are not the author of the question.'
+    expect(page).to_not have_link 'Delete Question'
   end
 end
