@@ -5,15 +5,15 @@ feature 'Author can delete his question', "
   As an autor
   I would like to be able to delete this question
 " do
-given(:author) { create(:user) }
-given(:not_author) { create(:user) }
-given(:question) { create :question, author: author }
+  given(:author) { create(:user) }
+  given(:not_author) { create(:user) }
+  given(:question) { create :question, author: author }
 
   scenario 'Author can delete his question' do
     sign_in(author)
     visit question_path(question)
 
-    click_on 'Delete'
+    click_on 'Delete Question'
 
     expect(page).to have_content 'Question was successfully deleted'
   end
@@ -22,7 +22,7 @@ given(:question) { create :question, author: author }
     sign_in(not_author)
     visit question_path(question)
 
-    click_on 'Delete'
+    click_on 'Delete Question'
 
     expect(page).to have_content 'You are not the author of the question.'
   end
