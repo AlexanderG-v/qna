@@ -5,7 +5,7 @@ feature 'User being on question page can write an answer to question', "
   question page without going to another page
 " do
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  given(:question) { create :question, author: user }
 
   describe 'Authenticated user' do
     
