@@ -9,12 +9,7 @@ div
 
 h3 All answer
 
-div
-  - @question.answers.each do |answer|
-    p= answer.body
-    - if current_user&.author?(answer)
-      p= link_to 'Delete Answer',
-                answer_path(answer),
-                method: :delete
+table
+  = render @question.answers
 
 = render 'answers/form'
