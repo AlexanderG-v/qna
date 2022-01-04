@@ -10,6 +10,7 @@ div
 h3 All answer
 
 table
-  = render @question.answers
+  .answers
+    = render @question.answers
 
 = render 'answers/form'

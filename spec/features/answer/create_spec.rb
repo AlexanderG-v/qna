@@ -19,8 +19,11 @@ feature 'User being on question page can write an answer to question', "
       fill_in 'answer[body]', with: 'text text text'
       click_on 'Answer'
 
+      expect(current_path).to eq question_path(question)
       expect(page).to have_content 'Your answer successfully created.'
-      expect(page).to have_content 'text text text'
+      within '.answers' do
+        expect(page).to have_content 'text text text'
+      end
     end
 
     scenario 'creates an answer to the question with error' do
