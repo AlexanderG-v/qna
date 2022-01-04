@@ -1,20 +1,29 @@
 class AnswersController < ApplicationController
-  before_action :set_answer, only: %i[show]
-  before_action :set_question, only: %i[new create]
+  before_action :authenticate_user!, except: %i[show]
+  before_action :set_answer, only: %i[show destroy]
+  before_action :set_question, only: %i[create]
 
   def show; end
 
-  def new
-    @answer = @question.answers.new
-  end
+  def new; end
 
   def create
     @answer = @question.answers.new(answer_params)
+    @answer.author = current_user
 
     if @answer.save
-      redirect_to @answer
+      redirect_to @question, notice: 'Your answer successfully created.'
     else
-      render :new
+      render 'questions/show'
+    end
+  end
+
+  def destroy
+    if current_user&.author?(@answer)
+      @answer.destroy
+      redirect_to question_path(@answer.question), notice: 'Answer was successfully deleted'
+    else
+      redirect_to question_path(@answer.question), notice: 'You are not the author of the answer.'
     end
   end
 
