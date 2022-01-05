@@ -1,20 +1,22 @@
 h1= @question.title
 h2= @question.body
 
-div
-  - if current_user&.author?(@question)
-    p= link_to 'Delete Question',
-              question_path(@question),
-              method: :delete
+- if current_user&.author?(@question)
+  p= link_to 'Delete Question',question_path(@question), method: :delete
 
 h3 All answer
 
 table.answers
   = render @question.answers
 
-.answer-errors
-  = render 'shared/errors', resource: @answer
-= form_with model: [@question, @answer], local: false do |f|
-  - f.label :body
+- if user_signed_in?
+  h4= 'Your Answer'
+  .answer_errors
+    = render 'shared/errors', resource: @answer
+  = form_with model: [@question, @answer],
+          local: false,
+          class: 'new-answer' do |f|
+    p
+      - f.label :body
     p= f.text_area :body
     p= f.submit 'Answer'

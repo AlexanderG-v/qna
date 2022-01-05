@@ -19,8 +19,7 @@ feature 'User being on question page can write an answer to question', "
       fill_in 'answer[body]', with: 'text text text'
       click_on 'Answer'
 
-      expect(current_path).to eq question_path(question)
-      expect(page).to have_content 'Your answer successfully created.'
+      expect(page).to have_current_path question_path(question), ignore_query: true
       within '.answers' do
         expect(page).to have_content 'text text text'
       end
@@ -35,8 +34,7 @@ feature 'User being on question page can write an answer to question', "
 
   scenario 'Unauthenticated user tries trying to create an answer to question' do
     visit question_path(question)
-    click_on 'Answer'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_button 'Answer'
   end
 end
