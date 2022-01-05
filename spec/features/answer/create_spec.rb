@@ -7,7 +7,7 @@ feature 'User being on question page can write an answer to question', "
   given(:user) { create(:user) }
   given(:question) { create :question, author: user }
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
     
     background do
       sign_in(user)

@@ -9,8 +9,12 @@ div
 
 h3 All answer
 
-table
-  .answers
-    = render @question.answers
+table.answers
+  = render @question.answers
 
-= render 'answers/form'
+.answer-errors
+  = render 'shared/errors', resource: @answer
+= form_with model: [@question, @answer], local: false do |f|
+  - f.label :body
+    p= f.text_area :body
+    p= f.submit 'Answer'
