@@ -27,6 +27,11 @@ gem 'slim-rails'
 # AUTH
 gem 'devise', '~> 4.0'
 
+# UI
+gem 'jquery-rails'
+gem 'bootstrap', '~> 5.0.1'
+gem 'mini_racer', platforms: :ruby
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
