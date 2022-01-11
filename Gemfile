@@ -28,8 +28,8 @@ gem 'slim-rails'
 gem 'devise', '~> 4.0'
 
 # UI
-gem 'jquery-rails'
 gem 'bootstrap', '~> 5.0.1'
+gem 'jquery-rails'
 gem 'mini_racer', platforms: :ruby
 
 # Use Active Storage variant
