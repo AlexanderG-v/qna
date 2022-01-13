@@ -5,7 +5,8 @@
       td= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
       td= link_to 'Delete Answer',
                   answer_path(answer),
-                  method: :delete
+                  method: :delete, 
+                  remote: true
 
   td= form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
       - f.label :body

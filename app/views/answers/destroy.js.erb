@@ -1,0 +1,4 @@
+<% unless @answer.persisted? %>
+  $('.answers').html('<%= j render @answer.question.answers %>');
+  $('.notice').text('<%= flash[:notice] %>')
+<% end %>
