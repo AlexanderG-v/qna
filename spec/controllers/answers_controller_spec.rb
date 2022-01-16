@@ -93,4 +93,36 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'POST #best_answer' do
+    let(:not_author_question) { create(:user) }
+    let!(:question) { create(:question, author: user) }
+    let!(:answer) { create(:answer, question: question, author: user) }
+    let!(:answer_2) { create(:answer, question: question, author: not_author_question) }
+
+    context 'Author of question' do
+      before { login(user) }
+
+      it 'can choose the best answer' do
+        post :best_answer, params: { id: answer, format: :js }
+        question.reload
+        expect(question.best_answer).to eq answer
+      end
+
+      it 'render template best answer' do
+        post :best_answer, params: { id: answer, format: :js }
+        expect(response).to render_template :best_answer
+      end
+    end
+
+    context 'Not author of question' do
+      before { login(not_author_question) }
+      
+      it 'can not choose the best answer' do
+        post :best_answer, params: { id: answer, format: :js }
+        question.reload
+        expect(question.best_answer).to_not eq answer
+      end
+    end
+  end
 end

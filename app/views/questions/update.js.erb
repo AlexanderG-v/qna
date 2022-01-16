@@ -1,8 +1,8 @@
-document.querySelector('.question_errors').innerHTML = '<%= render 'shared/errors', resource: @question %>';
+$('.question-errors').html('<%= render 'shared/errors', resource: @question %>');
 
 <% unless @question.errors.present? %>
-  $('.questions .question_title').text('<%= @question.title %>');
-  $('.questions .question_body').text('<%= @question.body %>');
+  $('.questions .question-title').text('<%= @question.title %>');
+  $('.questions .question-body').text('<%= @question.body %>');
   $('form#edit-question-' + <%= @question.id %>).addClass('hidden');
   $('.edit-question-link').show()
 <% end %>

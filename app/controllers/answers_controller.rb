@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[show]
-  before_action :set_answer, only: %i[show update destroy]
+  before_action :set_answer, only: %i[show update destroy best_answer]
   before_action :set_question, only: %i[create]
 
   def show; end
@@ -22,7 +22,18 @@ class AnswersController < ApplicationController
     return unless current_user&.author?(@answer)
 
     @answer.destroy
+    @question = @answer.question
     flash[:notice] = 'Answer was successfully deleted'
+  end
+
+  def best_answer
+    @question = @answer.question
+    return unless current_user&.author?(@question)
+
+    @question.set_best_answer(@answer)
+
+    @best_answer = @question.best_answer
+    @other_answers = @question.answers.where.not(id: @question.best_answer_id)
   end
 
   private

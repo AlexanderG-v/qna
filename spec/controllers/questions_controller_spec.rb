@@ -29,6 +29,10 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:answer)).to be_a_new(Answer)
     end
 
+    it 'assigns the @best_answer' do
+      expect(assigns(:best_answer)).to eq question.best_answer
+    end
+
     it 'render show view' do
       expect(response).to render_template :show
     end

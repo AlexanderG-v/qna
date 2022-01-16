@@ -14,7 +14,7 @@ feature 'Author can delete his answer', "
     sign_in(author)
     visit question_path(answer.question)
 
-    click_on 'Delete Answer'
+    click_on 'Delete answer'
 
     expect(page).to have_content 'Answer was successfully deleted'
   end
@@ -23,6 +23,6 @@ feature 'Author can delete his answer', "
     sign_in(not_author)
     visit question_path(question)
 
-    expect(page).to_not have_link 'Delete Answer'
+    expect(page).to_not have_link 'Delete answer'
   end
 end

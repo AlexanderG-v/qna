@@ -1,11 +1,14 @@
 .questions
-  .question_title
+  .question-title
     h1= @question.title
-  .question_body
+  .question-body
     h2= @question.body
+  .answer-body
+    - if @best_answer.present?
+      h3= @question.best_answer.body
 
   - if user_signed_in?
-    .question_errors
+    .question-errors
       = render 'shared/errors', resource: @question
     = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}" }, local: false do |f|
       p
@@ -27,11 +30,9 @@ table.answers
 
 - if user_signed_in?
   h4= 'Your Answer'
-  .answer_errors
+  .answer-errors
     = render 'shared/errors', resource: @answer
-  = form_with model: [@question, @answer],
-          local: false,
-          class: 'new-answer' do |f|
+  = form_with model: [@question, @answer], local: false, class: 'new-answer' do |f|
     p
       - f.label :body
     p= f.text_area :body

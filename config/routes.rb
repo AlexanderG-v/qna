@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :questions do 
-    resources :answers, shallow: true, except: :index
+    resources :answers, shallow: true, except: :index do
+      post :best_answer, on: :member
+    end
   end
 end
