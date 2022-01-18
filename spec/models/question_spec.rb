@@ -17,6 +17,10 @@ RSpec.describe Question, type: :model do
     it { should validate_presence_of :body }
   end
 
+  it 'have many attached file' do
+    expect(described_class.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
+  end
+  
   describe 'set best answer' do
     it 'set the best answer' do
       question.set_best_answer(question.answers.second)
