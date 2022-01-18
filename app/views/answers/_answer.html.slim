@@ -1,7 +1,18 @@
 - if answer.persisted?
   tr
     td= answer.body
+    - if current_user&.author?(@question) && !current_user&.author?(answer)
+      td= link_to 'Best answer', best_answer_answer_path(answer), method: :post, remote: true
     - if current_user&.author?(answer)
-      td= link_to 'Delete Answer',
+      td= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+      td= link_to 'Delete answer',
                   answer_path(answer),
-                  method: :delete
+                  method: :delete, 
+                  remote: true
+
+  td= form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
+    .edit-answer-errors
+      div class=["answer-error-#{answer.id}"]
+      - f.label :body
+      = f.text_area :body
+      = f.submit 'Save'

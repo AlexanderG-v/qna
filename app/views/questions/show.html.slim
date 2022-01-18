@@ -1,15 +1,39 @@
-h1= @question.title
-h2= @question.body
+.questions
+  .question-title
+    h1= @question.title
+  .question-body
+    h2= @question.body
+  .answer-body
+    - if @best_answer.present?
+      h3= @question.best_answer.body
 
-div
-  - if current_user&.author?(@question)
-    p= link_to 'Delete Question',
-              question_path(@question),
-              method: :delete
+  - if user_signed_in?
+    .question-errors
+      = render 'shared/errors', resource: @question
+    = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}" }, local: false do |f|
+      p
+        - f.label :title
+        = f.text_field :title
+      p
+        - f.label :body
+        = f.text_area :body
+      p= f.submit 'Save'
 
+    - if current_user&.author?(@question)
+      p= link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: @question.id }
+      p= link_to 'Delete Question', question_path(@question), method: :delete
+  
 h3 All answer
 
-table
+table.answers
   = render @question.answers
 
-= render 'answers/form'
+- if user_signed_in?
+  h4= 'Your Answer'
+  .answer-errors
+    = render 'shared/errors', resource: @answer
+  = form_with model: [@question, @answer], local: false, class: 'new-answer' do |f|
+    p
+      - f.label :body
+    p= f.text_area :body
+    p= f.submit 'Answer'

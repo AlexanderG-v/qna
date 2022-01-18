@@ -10,11 +10,11 @@ feature 'Author can delete his answer', "
   given(:question) { create :question, author: author }
   given(:answer) { create :answer, question: question, author: author }
 
-  scenario 'Author can delete his answer' do
+  scenario 'Author can delete his answer', js: true do
     sign_in(author)
     visit question_path(answer.question)
 
-    click_on 'Delete Answer'
+    click_on 'Delete answer'
 
     expect(page).to have_content 'Answer was successfully deleted'
   end
@@ -23,6 +23,6 @@ feature 'Author can delete his answer', "
     sign_in(not_author)
     visit question_path(question)
 
-    expect(page).to_not have_link 'Delete Answer'
+    expect(page).to_not have_link 'Delete answer'
   end
 end
