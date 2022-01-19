@@ -1,0 +1,4 @@
+<% unless @attachment.persisted? %>
+  $('#attachment_<%= @attachment.id %>').remove();
+  $('.notice').text('<%= flash[:notice] %>')
+<% end %>
