@@ -3,8 +3,8 @@
     h1= @question.title
   .question-body
     h2= @question.body
-
-  = render 'shared/attachments', resource: @question
+  .question-files
+    = render 'shared/attachments', resource: @question
 
   .answer-body
     - if @best_answer.present?
@@ -20,6 +20,9 @@
       p
         - f.label :body
         = f.text_area :body
+      p
+        - f.label :files
+        = f.file_field :files, multiple: true
       p = f.submit 'Save'
 
     - if current_user&.author?(@question)
