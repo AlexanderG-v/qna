@@ -46,6 +46,20 @@ feature 'Authenticated user can edit his answer', "
         expect(page).to have_content "Body can't be blank"
       end
     end
+
+    scenario 'edit his answer with attached files' do
+      click_on 'Edit'
+
+      within '.answers' do
+        fill_in 'answer[body]', with: 'edited answer'
+
+        attach_file 'answer[files][]', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Save'
+
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'spec_helper.rb'
+      end
+    end
   end
 
   scenario "Authenticated user tries to edit other's answer" do

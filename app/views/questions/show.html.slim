@@ -6,7 +6,6 @@
   .question-files
     = render 'shared/attachments', resource: @question
 
-  .answer-body
     - if @best_answer.present?
       h3= @question.best_answer.body
 
