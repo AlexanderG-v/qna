@@ -1,9 +1,8 @@
 - if answer.persisted?
   tr
     td= answer.body
-    - if @answer.files.attached?
-      - @answer.files.each do |file|
-        p= link_to file.filename.to_s, url_for(file)
+
+    = render 'shared/attachments', resource: @answer
 
     - if current_user&.author?(@question) && !current_user&.author?(answer)
       td= link_to 'Best answer', best_answer_answer_path(answer), method: :post, remote: true
