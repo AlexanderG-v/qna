@@ -1,4 +1,4 @@
 <% unless @attachment.persisted? %>
+  $('.flash-message').html('<%= render 'shared/flash_message' %>');
   $('#attachment_<%= @attachment.id %>').remove();
-  $('.notice').text('<%= flash[:notice] %>')
 <% end %>

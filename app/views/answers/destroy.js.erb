@@ -1,4 +1,4 @@
 <% unless @answer.persisted? %>
+  $('.flash-message').html('<%= render 'shared/flash_message' %>');
   $('.answers').html('<%= j render @answer.question.answers %>');
-  $('.notice').text('<%= flash[:notice] %>')
 <% end %>
