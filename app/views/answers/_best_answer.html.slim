@@ -1,4 +1,5 @@
 - if resource&.persisted?
     h4 The best answer
     p= resource.body
+    p= render 'shared/attachments', resource: resource
 hr

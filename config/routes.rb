@@ -9,4 +9,6 @@ Rails.application.routes.draw do
       post :best_answer, on: :member
     end
   end
+
+  resources :attachments, only: :destroy
 end

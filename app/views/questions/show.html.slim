@@ -3,7 +3,9 @@
     h1= @question.title
   .question-body
     h2= @question.body
-  .answer-body
+  .question-files
+    = render 'shared/attachments', resource: @question
+
     - if @best_answer.present?
       h3= @question.best_answer.body
 
@@ -17,11 +19,14 @@
       p
         - f.label :body
         = f.text_area :body
-      p= f.submit 'Save'
+      p
+        - f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
+      p = f.submit 'Save'
 
     - if current_user&.author?(@question)
-      p= link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: @question.id }
-      p= link_to 'Delete Question', question_path(@question), method: :delete
+      p = link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: @question.id }
+      p = link_to 'Delete Question', question_path(@question), method: :delete
   
 h3 All answer
 
@@ -33,7 +38,8 @@ table.answers
   .answer-errors
     = render 'shared/errors', resource: @answer
   = form_with model: [@question, @answer], local: false, class: 'new-answer' do |f|
-    p
-      - f.label :body
-    p= f.text_area :body
-    p= f.submit 'Answer'
+    - f.label :body
+    p = f.text_area :body
+    - f.label :files
+    p = f.file_field :files, multiple: true, direct_upload: true
+    p = f.submit 'Answer'

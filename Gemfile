@@ -24,6 +24,9 @@ gem 'jbuilder', '~> 2.7'
 # template engine slim
 gem 'slim-rails'
 
+# Amazon S3
+gem 'aws-sdk-s3', require: false
+
 # AUTH
 gem 'devise', '~> 4.0'
 
@@ -45,6 +48,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 5.0'
   # To create text data
   gem 'factory_bot_rails'
+  # Environment variables
+  gem 'dotenv-rails'
 
   gem 'rubocop', '~> 1.24', require: false
   gem 'rubocop-performance', require: false
