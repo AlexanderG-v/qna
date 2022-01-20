@@ -21,7 +21,7 @@
         = f.text_area :body
       p
         - f.label :files
-        = f.file_field :files, multiple: true
+        = f.file_field :files, multiple: true, direct_upload: true
       p = f.submit 'Save'
 
     - if current_user&.author?(@question)
@@ -41,5 +41,5 @@ table.answers
     - f.label :body
     p = f.text_area :body
     - f.label :files
-    p = f.file_field :files, multiple: true
+    p = f.file_field :files, multiple: true, direct_upload: true
     p = f.submit 'Answer'
