@@ -7,7 +7,7 @@ feature 'Authenticated user can edit his answer', "
 " do
   given(:user) { create :user }
   given(:not_author) { create(:user) }
-  given!(:question) { create(:question, author: user) }
+  given(:question) { create(:question, author: user) }
   given!(:answer) { create(:answer, question: question, author: user) }
   given(:answer_with_files) { create(:answer, :with_files, question: question, author: user) }
 

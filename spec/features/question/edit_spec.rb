@@ -7,8 +7,8 @@ feature 'Authenticated user can edit his question', "
 " do
   given(:user) { create :user }
   given(:not_author) { create(:user) }
-  given!(:question) { create :question, author: user }
-  given!(:question_with_files) { create(:question, :with_files, author: user) }
+  given(:question) { create :question, author: user }
+  given(:question_with_files) { create(:question, :with_files, author: user) }
 
   describe 'Authenticated user', js: true do
     background do

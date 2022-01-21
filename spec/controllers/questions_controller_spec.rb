@@ -39,9 +39,10 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
-    before { login(user) }
-
-    before { get :new }
+    before do
+      login(user)
+      get :new
+    end
 
     it 'assigns new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
@@ -53,9 +54,10 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    before { login(user) }
-
-    before { get :edit, params: { id: question } }
+    before do 
+      login(user)
+      get :edit, params: { id: question }
+    end
 
     it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question

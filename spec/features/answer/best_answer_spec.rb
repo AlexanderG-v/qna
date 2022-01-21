@@ -5,9 +5,9 @@ feature 'User can choose the best answer to the question', '
   As the author of the question
   I would like to choose the best answer to a question
 ' do
-  given!(:user) { create(:user) }
-  given!(:not_author) { create(:user) }
-  given!(:question) { create :question, author: user }
+  given(:user) { create(:user) }
+  given(:not_author) { create(:user) }
+  given(:question) { create :question, author: user }
   given!(:answer) { create :answer, question: question, author: not_author }
 
   describe 'Authenticated user', js: true do
