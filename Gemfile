@@ -24,7 +24,7 @@ gem 'jbuilder', '~> 2.7'
 # template engine slim
 gem 'slim-rails'
 # Working with nested forms
-gem "cocoon"
+gem 'cocoon'
 
 # Amazon S3
 gem 'aws-sdk-s3', require: false

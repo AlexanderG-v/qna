@@ -10,16 +10,8 @@
   p 
     = f.label :files
     = f.file_field :files, multiple: true, direct_upload: true
+    
+  = render 'links/link', resource: @question, f: f
 
-  p Links:
-  p 
-    = f.fields_for :links do |l|
-      p 
-        = l.label :name, 'Link name'
-        = l.text_area :name
-      p 
-        = l.label :url
-        = l.text_area :url
-        
   p = f.submit 'Ask'
   
