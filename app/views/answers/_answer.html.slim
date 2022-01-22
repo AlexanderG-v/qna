@@ -11,6 +11,13 @@
                   method: :delete, 
                   remote: true
 
+  tr
+    .links
+      td Links:
+      ul
+        - answer.links.each do |link|
+          td = link_to link.name, link.url
+
   td= form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
     .edit-answer-errors
       div class=["answer-error-#{answer.id}"]
