@@ -9,28 +9,43 @@ feature 'User can add links to answer', "
   given(:question) { create :question, author: user }
   given(:gist_url) { 'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c' }
   given(:other_url) { 'https://github.com/AlexanderG-v' }
+  given(:invalid_url) { 'Invalid_url' }
 
-  scenario 'User adds link when asks answer', js: true do
-    sign_in(user)
-    visit question_path(question)
+  describe 'User adds link when asks answer', js: true do
+    background do
+      sign_in(user)
+      visit question_path(question)
 
-    fill_in 'answer[body]', with: 'text text text'
-
-    fill_in 'Link name', with: 'My gist'
-    fill_in 'Url', with: gist_url
-
-    click_on 'Add link'
-
-    within '.nested-fields' do
-      fill_in 'Link name', with: 'GitHub'
-      fill_in 'Url', with: other_url
+      fill_in 'answer[body]', with: 'text text text'
     end
 
-    click_on 'Answer'
+    scenario 'with valid url' do
+      fill_in 'Link name', with: 'My gist'
+      fill_in 'Url', with: gist_url
 
-    within '.answers' do
-      expect(page).to have_link 'My gist', href: gist_url
-      expect(page).to have_link 'GitHub', href: other_url
+      click_on 'Add link'
+
+      within '.nested-fields' do
+        fill_in 'Link name', with: 'GitHub'
+        fill_in 'Url', with: other_url
+      end
+
+      click_on 'Answer'
+
+      within '.answers' do
+        expect(page).to have_link 'My gist', href: gist_url
+        expect(page).to have_link 'GitHub', href: other_url
+      end
+    end
+
+    scenario 'with invalid url' do
+      fill_in 'Link name', with: 'Invalid'
+      fill_in 'Url', with: invalid_url
+
+      click_on 'Answer'
+
+      expect(page).to_not have_link 'Invalid'
+      expect(page).to have_content 'Links url is invalid'
     end
   end
 end
