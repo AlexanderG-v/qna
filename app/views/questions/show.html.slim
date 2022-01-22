@@ -5,6 +5,12 @@
     h2= @question.body
   .question-files
     = render 'shared/attachments', resource: @question
+  
+  .links
+    p Links:
+    ul
+      - @question.links.each do |link|
+        li= link_to link.name, link.url
 
     - if @best_answer.present?
       h3= @question.best_answer.body

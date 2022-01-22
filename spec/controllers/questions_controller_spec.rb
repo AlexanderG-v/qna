@@ -48,6 +48,10 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to be_a_new(Question)
     end
 
+    it 'assigns new Question to @question with links' do
+      expect(assigns(:question).links.first).to be_a_new(Link)
+    end
+
     it 'render show new' do
       expect(response).to render_template :new
     end
