@@ -8,6 +8,7 @@ feature 'User can add links to answer', "
   given(:user) { create(:user) }
   given(:question) { create :question, author: user }
   given(:gist_url) { 'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c' }
+  given(:other_url) { 'https://github.com/AlexanderG-v' }
 
   scenario 'User adds link when asks answer', js: true do
     sign_in(user)
@@ -18,10 +19,18 @@ feature 'User can add links to answer', "
     fill_in 'Link name', with: 'My gist'
     fill_in 'Url', with: gist_url
 
+    click_on 'Add link'
+
+    within '.nested-fields' do
+      fill_in 'Link name', with: 'GitHub'
+      fill_in 'Url', with: other_url
+    end
+
     click_on 'Answer'
 
     within '.answers' do
       expect(page).to have_link 'My gist', href: gist_url
+      expect(page).to have_link 'GitHub', href: other_url
     end
   end
 end
