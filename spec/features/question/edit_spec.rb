@@ -9,6 +9,7 @@ feature 'Authenticated user can edit his question', "
   given(:not_author) { create(:user) }
   given(:question) { create :question, author: user }
   given(:question_with_files) { create(:question, :with_files, author: user) }
+  given(:question_with_links) { create(:question, :with_links, author: user) }
 
   describe 'Authenticated user', js: true do
     background do
@@ -52,7 +53,29 @@ feature 'Authenticated user can edit his question', "
         expect(page).to have_link 'spec_helper.rb'
       end
     end
-      
+
+    scenario 'edit his question with links' do
+      visit question_path(question_with_links)
+      click_on 'Edit Question'
+  
+      within '.questions' do
+        fill_in 'Link name', with: 'New link'
+        fill_in 'Url', with: 'https://google.com'
+
+        click_on 'Add link'
+        
+        within '.nested-fields' do
+          fill_in 'Link name', with: 'One more link'
+          fill_in 'Url', with: 'https://ya.ru'
+        end
+
+        click_on 'Save'
+      end
+      expect(page).to_not have_link 'MyString'
+      expect(page).to have_link 'New link', href: 'https://google.com'
+      expect(page).to have_link 'One more link', href: 'https://ya.ru'
+    end
+    
     scenario 'Author can delete files attached to question' do
       visit question_path(question_with_files)
       

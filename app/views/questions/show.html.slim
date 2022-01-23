@@ -25,6 +25,8 @@
       p
         - f.label :files
         = f.file_field :files, multiple: true, direct_upload: true
+      .question_links
+        p = render 'links/link', resource: @question, f: f
       p = f.submit 'Save'
 
     - if current_user&.author?(@question)
