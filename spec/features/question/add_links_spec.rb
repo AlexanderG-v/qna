@@ -6,7 +6,7 @@ feature 'User can add links to question', "
   I'd like to be able to add links
 " do
   given(:user) { create(:user) }
-  given(:gist_url) { 'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c' }
+  given(:gist_url) { 'https://gist.github.com/AlexanderG-v/ebdb690c69f3bb79b4cf92a502bca73b' }
   given(:other_url) { 'https://github.com/AlexanderG-v' }
   given(:invalid_url) { 'Invalid_url' }
 
@@ -46,6 +46,18 @@ feature 'User can add links to question', "
 
       expect(page).to_not have_link 'Invalid'
       expect(page).to have_content 'Links url is invalid'
+    end
+
+    scenario 'open gist url' do
+      fill_in 'Link name', with: 'My gist'
+      fill_in 'Url', with: gist_url
+
+      click_on 'Ask'
+
+      within '.questions' do
+        expect(page).to have_link 'My gist', href: gist_url
+        expect(page).to have_content 'Test gist'
+      end
     end
   end
 end
