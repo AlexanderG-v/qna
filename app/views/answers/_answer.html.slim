@@ -24,6 +24,7 @@
       p
         - f.label :files
         = f.file_field :files, multiple: true, direct_upload: true
+      p = render 'links/link', resource: @question, f: f
       p = f.submit 'Save'
 
   p= render 'shared/attachments', resource: answer
