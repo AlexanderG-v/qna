@@ -48,7 +48,7 @@ feature 'Author can delete his question', "
       expect(page).to_not have_link 'Delete Question'
     end
 
-    scenario 'Not Author can not delete files attached to question' do
+    scenario 'can not delete links to question' do
       visit question_path(question_with_links)
 
       within '.questions' do
