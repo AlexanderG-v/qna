@@ -3,8 +3,12 @@
     h1= @question.title
   .question-body
     h2= @question.body
+    
   .question-files
     = render 'shared/attachments', resource: @question
+  
+  .question-reward
+    = render 'rewards/reward', resource: @question
   
   .links
     = render 'links/links_collection', resource: @question
