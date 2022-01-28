@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) { create :user }
+  let(:not_autor) { create :user }
 
   it { should have_many(:questions).class_name('Question') }
   it { should have_many(:answers).class_name('Answer') }
+  it { should have_many(:rewards).dependent(:nullify) }
 
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
@@ -23,7 +25,6 @@ RSpec.describe User, type: :model do
   end
 
   context 'User do not author' do
-    let(:not_autor) { create :user }
     let(:question) { create :question, author: not_autor }
 
     it 'of question' do

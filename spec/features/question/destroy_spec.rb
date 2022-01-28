@@ -8,20 +8,52 @@ feature 'Author can delete his question', "
   given(:author) { create(:user) }
   given(:not_author) { create(:user) }
   given(:question) { create :question, author: author }
+  given(:question_with_links) { create(:question, :with_links, author: author) }
 
-  scenario 'Author can delete his question' do
-    sign_in(author)
-    visit question_path(question)
+  describe 'Author', js: true do
+    before do
+      sign_in(author)
+    end
 
-    click_on 'Delete Question'
+    scenario 'can delete his question' do
+      visit question_path(question)
 
-    expect(page).to have_content 'Question was successfully deleted'
+      click_on 'Delete Question'
+
+      expect(page).to have_content 'Question was successfully deleted'
+    end
+
+    scenario 'can delete links to question' do
+      visit question_path(question_with_links)
+
+      within '.questions' do
+        expect(page).to have_link 'MyString', href: 'https://github.com'
+        click_on 'Delete link'
+
+        expect(page).to_not have_link 'MyString'
+        expect(page).to_not have_link 'Delit link'
+      end
+      expect(page).to have_content 'Link was successfully deleted'
+    end
   end
 
-  scenario 'Not Author can not delete others question' do
-    sign_in(not_author)
-    visit question_path(question)
+  describe 'Not author' do
+    background do
+      sign_in(not_author)
+    end
 
-    expect(page).to_not have_link 'Delete Question'
+    scenario 'can not delete others question' do
+      visit question_path(question)
+
+      expect(page).to_not have_link 'Delete Question'
+    end
+
+    scenario 'can not delete links to question' do
+      visit question_path(question_with_links)
+
+      within '.questions' do
+        expect(page).to_not have_link 'Delit link'
+      end
+    end
   end
 end

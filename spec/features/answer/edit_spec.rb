@@ -7,9 +7,10 @@ feature 'Authenticated user can edit his answer', "
 " do
   given(:user) { create :user }
   given(:not_author) { create(:user) }
-  given!(:question) { create(:question, author: user) }
+  given(:question) { create(:question, author: user) }
   given!(:answer) { create(:answer, question: question, author: user) }
   given(:answer_with_files) { create(:answer, :with_files, question: question, author: user) }
+  given!(:link) { create :link, linkable: answer }
 
   scenario 'Unauthenticated user can not edit answer' do
     visit question_path(question)
@@ -55,6 +56,25 @@ feature 'Authenticated user can edit his answer', "
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'spec_helper.rb'
       end
+    end
+
+    scenario 'edit his answer with links' do
+      within '.answers' do
+        fill_in 'Link name', with: 'New link'
+        fill_in 'Url', with: 'https://google.com'
+
+        click_on 'Add link'
+        
+        within '.nested-fields' do
+          fill_in 'Link name', with: 'One more link'
+          fill_in 'Url', with: 'https://ya.ru'
+        end
+
+        click_on 'Save'
+      end
+      expect(page).to_not have_link 'MyString'
+      expect(page).to have_link 'New link', href: 'https://google.com'
+      expect(page).to have_link 'One more link', href: 'https://ya.ru'
     end
 
     scenario 'Author can delete files attached to answer' do

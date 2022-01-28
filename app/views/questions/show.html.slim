@@ -3,8 +3,15 @@
     h1= @question.title
   .question-body
     h2= @question.body
+    
   .question-files
     = render 'shared/attachments', resource: @question
+  
+  .question-reward
+    = render 'rewards/reward', resource: @question
+  
+  .links
+    = render 'links/links_collection', resource: @question
 
     - if @best_answer.present?
       h3= @question.best_answer.body
@@ -22,6 +29,8 @@
       p
         - f.label :files
         = f.file_field :files, multiple: true, direct_upload: true
+      .question_links
+        p = render 'links/link', resource: @question, f: f
       p = f.submit 'Save'
 
     - if current_user&.author?(@question)
@@ -30,7 +39,7 @@
   
 h3 All answer
 
-table.answers
+.answers
   = render @question.answers
 
 - if user_signed_in?
@@ -42,4 +51,8 @@ table.answers
     p = f.text_area :body
     - f.label :files
     p = f.file_field :files, multiple: true, direct_upload: true
+
+    .answer_links
+      = render 'links/link', resource: @answer, f: f
+
     p = f.submit 'Answer'

@@ -6,6 +6,6 @@ class AttachmentsController < ApplicationController
     return unless current_user.author?(@attachment.record)
 
     @attachment.purge
-    flash[:notice] = 'File was successfully deleted'
+    flash.now[:notice] = 'File was successfully deleted'
   end
 end

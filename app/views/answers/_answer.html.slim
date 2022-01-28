@@ -1,17 +1,21 @@
 - if answer.persisted?
-  tr
-    td= answer.body
+  table
+    tr
+      td= answer.body
+      - if current_user&.author?(@question) && !current_user&.author?(answer)
+        td= link_to 'Best answer', best_answer_answer_path(answer), method: :post, remote: true
+      - if current_user&.author?(answer)
+        td= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+        
+        td= link_to 'Delete answer',
+                    answer_path(answer),
+                    method: :delete, 
+                    remote: true
 
-    - if current_user&.author?(@question) && !current_user&.author?(answer)
-      td= link_to 'Best answer', best_answer_answer_path(answer), method: :post, remote: true
-    - if current_user&.author?(answer)
-      td= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-      td= link_to 'Delete answer',
-                  answer_path(answer),
-                  method: :delete, 
-                  remote: true
-
-  td= form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
+  .links
+    = render 'links/links_collection', resource: answer
+  
+  p= form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
     .edit-answer-errors
       div class=["answer-error-#{answer.id}"]
       p 
@@ -20,7 +24,8 @@
       p
         - f.label :files
         = f.file_field :files, multiple: true, direct_upload: true
+      p = render 'links/link', resource: @question, f: f
       p = f.submit 'Save'
 
-  tr
-    td= render 'shared/attachments', resource: answer
+  p= render 'shared/attachments', resource: answer
+hr

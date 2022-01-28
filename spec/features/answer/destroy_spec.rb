@@ -9,20 +9,52 @@ feature 'Author can delete his answer', "
   given(:not_author) { create(:user) }
   given(:question) { create :question, author: author }
   given(:answer) { create :answer, question: question, author: author }
+  given(:answer_with_links) { create(:answer, :with_links, question: question, author: author) }
 
-  scenario 'Author can delete his answer', js: true do
-    sign_in(author)
-    visit question_path(answer.question)
+  describe 'Author' do
+    background do
+      sign_in(author)
+    end
 
-    click_on 'Delete answer'
+    scenario 'can delete his answer', js: true do
+      visit question_path(answer.question)
 
-    expect(page).to have_content 'Answer was successfully deleted'
+      click_on 'Delete answer'
+
+      expect(page).to have_content 'Answer was successfully deleted'
+    end
+
+    scenario 'can delete links to answer', js: true do
+      visit question_path(answer_with_links.question)
+
+      within '.answers' do
+        expect(page).to have_link 'MyString', href: 'https://github.com'
+        click_on 'Delete link'
+
+        expect(page).to_not have_link 'MyString'
+        expect(page).to_not have_link 'Delit link'
+      end
+      expect(page).to have_content 'Link was successfully deleted'
+    end
   end
 
-  scenario 'Not Author can not delete others answer' do
-    sign_in(not_author)
-    visit question_path(question)
+  describe 'Not author' do
+    background do
+      sign_in(not_author)
+    end
 
-    expect(page).to_not have_link 'Delete answer'
+    scenario 'can not delete others answer' do
+      visit question_path(question)
+
+      expect(page).to_not have_link 'Delete answer'
+    end
+
+    scenario 'can not delete links to answer' do
+      visit question_path(answer_with_links.question)
+
+      within '.answers' do
+        expect(page).to_not have_link 'Delit link'
+      end
+    end
   end
 end

@@ -1,0 +1,5 @@
+.row.justify-content-center.mt-3
+  - flash.each do |key, msg|
+    .col.col-md-4
+      div class=("text-center #{flash_class(key)}") role="alert" 
+        = msg.html_safe

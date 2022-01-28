@@ -1,0 +1,4 @@
+<% unless @link.persisted? %>
+  $('.flash-message').html('<%= render 'shared/flash_message' %>');
+  $('#link_<%= @link.id %>').remove();
+<% end %>

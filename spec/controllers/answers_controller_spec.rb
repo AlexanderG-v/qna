@@ -33,7 +33,7 @@ RSpec.describe AnswersController, type: :controller do
   describe 'PACH #update' do
     before { login(user) }
 
-    let!(:answer) { create :answer, question: question, author: user }
+    let(:answer) { create :answer, question: question, author: user }
 
     context 'with valid attributes' do
       it 'changes answer attributes' do
@@ -96,9 +96,8 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'POST #best_answer' do
     let(:not_author_question) { create(:user) }
-    let!(:question) { create(:question, author: user) }
-    let!(:answer) { create(:answer, question: question, author: user) }
-    let!(:answer_2) { create(:answer, question: question, author: not_author_question) }
+    let(:answer) { create(:answer, question: question, author: user) }
+    let(:answer_2) { create(:answer, question: question, author: not_author_question) }
 
     context 'Author of question' do
       before { login(user) }

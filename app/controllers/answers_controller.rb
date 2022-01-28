@@ -23,7 +23,7 @@ class AnswersController < ApplicationController
 
     @answer.destroy
     @question = @answer.question
-    flash[:notice] = 'Answer was successfully deleted'
+    flash.now[:notice] = 'Answer was successfully deleted'
   end
 
   def best_answer
@@ -47,6 +47,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, files: [])
+    params.require(:answer).permit(:body, files: [],
+                                          links_attributes: [:id, :name, :url, :_destroy])
   end
 end
