@@ -14,8 +14,8 @@ class Question < ApplicationRecord
 
   def set_best_answer(answer)
     transaction do
-      update(best_answer: answer)
-      reward&.update(user: answer.author)
+      update!(best_answer: answer)
+      reward&.update!(user: answer.author)
     end
   end
 end

@@ -17,7 +17,7 @@ FactoryBot.define do
     end
 
     trait :with_reward do
-      after :create do |question|
+      after(:create) do |question|
         create(:reward, question: question)
       end
     end
