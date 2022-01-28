@@ -6,6 +6,7 @@ feature 'User can change question rating by voting', "
   I'd like to be able vote up or down a question
 " do
   given(:user) { create(:user) }
+  given(:not_author) { create(:user) }
   given!(:question) { create(:question, author: user) }
 
   describe 'Unauthenticated user' do
@@ -31,11 +32,12 @@ feature 'User can change question rating by voting', "
 
   describe 'Authenticated user', js: true do
     before do
-      sign_in(user)
+      sign_in(not_author)
       visit question_path(question)
     end
 
     scenario 'vote up a question' do
+      # save_and_open_page
       within '.question-rating' do
         click_on 'UP'
 
@@ -46,7 +48,7 @@ feature 'User can change question rating by voting', "
       end
     end
 
-    scenario 'vote down a question ' do
+    scenario 'vote down a question' do
       within '.question-rating' do
         click_on 'DOWN'
 
@@ -57,7 +59,7 @@ feature 'User can change question rating by voting', "
       end
     end
 
-    scenario 'vote cancel a question ' do
+    scenario 'vote cancel a question' do
       within '.question-rating' do
         click_on 'UP'
 

@@ -13,6 +13,9 @@
   .links
     = render 'links/links_collection', resource: @question
 
+  .question-rating
+    = render 'shared/rating', resource: @question
+
     - if @best_answer.present?
       h3= @question.best_answer.body
 

@@ -1,0 +1,9 @@
+- if user_signed_in? || current_user&.author?(resource)
+  p Rating:
+  => resource.rating_value
+  - if current_user&.voted?(resource)
+    = link_to 'Cancel vote'
+  - else
+    => link_to 'UP'
+    '|
+    =< link_to 'DOWN'

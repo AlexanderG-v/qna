@@ -32,7 +32,7 @@ feature 'User can change answer rating by voting', "
 
   describe 'Authenticated user', js: true do
     before do
-      sign_in(user)
+      sign_in(not_author)
       visit question_path(question)
     end
 
