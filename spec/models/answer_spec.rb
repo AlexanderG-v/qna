@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require Rails.root.join('spec/models/concerns/votable_spec.rb')
 
 RSpec.describe Answer, type: :model do
   it { should belong_to :question }
@@ -17,4 +18,6 @@ RSpec.describe Answer, type: :model do
   end
 
   it { should have_db_index :body }
+
+  it_behaves_like 'votable'
 end 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require Rails.root.join('spec/models/concerns/votable_spec.rb')
 
 RSpec.describe Question, type: :model do
   let(:user) { create(:user) }
@@ -42,4 +43,6 @@ RSpec.describe Question, type: :model do
     it { should have_db_column(:best_answer_id).with_options(null: true) }
     it { should have_db_column(:best_answer_id).of_type(:integer) }
   end
+
+  it_behaves_like 'votable'
 end
