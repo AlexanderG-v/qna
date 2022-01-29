@@ -13,7 +13,7 @@
   .links
     = render 'links/links_collection', resource: @question
 
-  .question-rating
+  .rating
     = render 'shared/rating', resource: @question
 
     - if @best_answer.present?

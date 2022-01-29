@@ -14,6 +14,7 @@ import '@nathanvda/cocoon'
 import '../answers'
 import '../questions'
 import '../direct_uploads'
+import '../votes'
 
 Rails.start()
 Turbolinks.start()

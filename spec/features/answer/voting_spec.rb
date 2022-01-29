@@ -6,6 +6,7 @@ feature 'User can change answer rating by voting', "
   I'd like to be able vote up or down a answer
 " do
   given(:user) { create(:user) }
+  given(:not_author) { create(:user) }
   given!(:question) { create(:question, author: user) }
   given!(:answer) { create(:answer, question: question, author: user) }
 
