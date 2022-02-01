@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-shared_examples_for 'votable' do
+RSpec.shared_examples_for 'votable' do
   it { should have_many(:votes).dependent(:destroy) }
 
   let(:votable) { create(described_class.to_s.underscore.to_sym, author: user) }
