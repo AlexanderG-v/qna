@@ -11,6 +11,10 @@
                     answer_path(answer),
                     method: :delete, 
                     remote: true
+    - unless current_user&.author?(answer)
+      tr class="answer-id-#{answer.id}"
+        td class='rating'
+          = render 'shared/rating', resource: answer
 
   .links
     = render 'links/links_collection', resource: answer
