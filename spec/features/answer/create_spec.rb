@@ -44,6 +44,33 @@ feature 'User being on question page can write an answer to question', "
     end
   end
 
+  context 'multiple sessions' do
+    scenario "answer appears on another user's page" do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        fill_in 'answer[body]', with: 'text text text'
+        click_on 'Answer'
+
+        expect(page).to have_current_path question_path(question), ignore_query: true
+        within '.answers' do
+          expect(page).to have_content 'text text text'
+        end
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'text text text'
+      end
+    end
+  end
+
   scenario 'Unauthenticated user tries trying to create an answer to question' do
     visit question_path(question)
 
