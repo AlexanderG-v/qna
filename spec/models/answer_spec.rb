@@ -19,5 +19,5 @@ RSpec.describe Answer, type: :model do
 
   it { should have_db_index :body }
 
-  #it_behaves_like 'votable'
+  # it_behaves_like 'votable'
 end 

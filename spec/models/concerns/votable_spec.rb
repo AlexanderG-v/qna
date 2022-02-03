@@ -17,7 +17,7 @@ RSpec.shared_examples_for 'votable' do
     it 'when action to vote down' do
       votable.vote(-1, user)
 
-      expect(votable.votes.last.value).to eq -1
+      expect(votable.votes.last.value).to eq(-1)
     end
 
     it 'when action to cancel vote' do
@@ -29,7 +29,7 @@ RSpec.shared_examples_for 'votable' do
   end
 
   describe '#rating_value' do
-    let(:users){ create_list(:user, 4) }
+    let(:users) { create_list(:user, 4) }
 
     it '#rating_value' do
       users.each do |user|
