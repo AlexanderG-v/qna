@@ -4,7 +4,6 @@ document.addEventListener('turbolinks:load', () => {
   consumer.subscriptions.create({ channel: 'QuestionsChannel' } , {
     connected() {
         console.log('QuestionsChannel connected');
-        this.perform('subscribed')
     },
 
     disconnected() {

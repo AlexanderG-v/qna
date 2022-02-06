@@ -26,6 +26,8 @@ gem 'slim-rails'
 # Working with nested forms
 gem 'cocoon'
 
+gem 'gon'
+
 # Amazon S3
 gem 'aws-sdk-s3', require: false
 

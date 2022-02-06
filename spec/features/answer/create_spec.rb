@@ -44,7 +44,7 @@ feature 'User being on question page can write an answer to question', "
     end
   end
 
-  context 'multiple sessions' do
+  context 'multiple sessions', js: true do
     scenario "answer appears on another user's page" do
       Capybara.using_session('user') do
         sign_in(user)

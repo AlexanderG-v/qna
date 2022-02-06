@@ -1,6 +1,6 @@
 - if answer.persisted?
   table
-    tr
+    tr class='.other-answers'
       td= answer.body
       - if current_user&.author?(@question) && !current_user&.author?(answer)
         td= link_to 'Best answer', best_answer_answer_path(answer), method: :post, remote: true
