@@ -44,4 +44,36 @@ feature 'User can comment on the question', "
       expect(page).to_not have_link 'Add comment'
     end
   end
+
+  context 'multiple sessions', js: true do
+    scenario "comment to the question appears on another user's page" do
+      Capybara.using_session('user') do
+        sign_in(user)
+
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        within '.question' do
+          click_link 'Add comment'
+          fill_in 'comment[body]', with: 'text text text'
+          click_button 'Comment'
+
+          expect(page).to have_content 'Comment text'
+          expect(page).to_not have_selector 'textarea'
+        end
+      end
+
+      Capybara.using_session('guest') do
+        within '.question' do
+          expect(page).to have_content 'Comment text'
+          expect(page).to_not have_selector 'textarea'
+        end
+      end
+    end
+  end
 end
