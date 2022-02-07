@@ -39,6 +39,11 @@
     - if current_user&.author?(@question)
       p = link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: @question.id }
       p = link_to 'Delete Question', question_path(@question), method: :delete
+
+.question
+  div class="question-#{@question.id}-comments"
+    = render 'comments/comments', resource: @question
+
   
 h3 All answer
 

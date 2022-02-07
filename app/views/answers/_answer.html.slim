@@ -16,6 +16,10 @@
         td class='rating'
           = render 'shared/rating', resource: answer
 
+    tr
+      td class="answer-#{answer.id}-comments"
+        = render 'comments/comments', resource: answer
+
   .links
     = render 'links/links_collection', resource: answer
   

@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   resources :questions, concerns: [:votable] do
     resources :answers, shallow: true, except: :index, concerns: [:votable] do
       post :best_answer, on: :member
+      resources :comments, defaults: { commentable: 'answer' }
     end
+    resources :comments, defaults: { commentable: 'question' }
   end
 
   resources :users, only: :show_rewards do
