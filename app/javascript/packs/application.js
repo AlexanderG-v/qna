@@ -15,6 +15,7 @@ import '../answers'
 import '../questions'
 import '../direct_uploads'
 import '../votes'
+import '../comments'
 
 Rails.start()
 Turbolinks.start()

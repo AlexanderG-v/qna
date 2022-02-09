@@ -19,6 +19,9 @@ module Qna
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # Valid request domains ActionCable
+    config.action_cable.disable_request_forgery_protection = false
+
     # configuration of rspec generator options
     config.generators do |g|
       g.test_framework :rspec, 
