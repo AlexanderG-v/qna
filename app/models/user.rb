@@ -18,4 +18,6 @@ class User < ApplicationRecord
   def voted?(obj)
     votes.where(votable: obj).present?
   end
+
+  def self.find_for_oauth(auth); end
 end

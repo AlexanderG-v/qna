@@ -33,7 +33,7 @@ gem 'aws-sdk-s3', require: false
 
 # AUTH
 gem 'devise', '~> 4.0'
-gem 'omniauth', "~> 1.9.1"
+gem 'omniauth', '~> 1.9.1'
 gem 'omniauth-github'
 
 # UI
