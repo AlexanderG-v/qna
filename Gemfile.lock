@@ -170,6 +170,8 @@ GEM
     jwt (2.3.0)
     launchy (2.5.0)
       addressable (~> 2.7)
+    letter_opener (1.7.0)
+      launchy (~> 2.2)
     libv8-node (16.10.0.0)
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -394,6 +396,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   jquery-rails
   launchy
+  letter_opener
   listen (~> 3.3)
   mini_racer
   omniauth (~> 1.9.1)

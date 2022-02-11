@@ -59,6 +59,8 @@ group :development, :test do
   gem 'factory_bot_rails'
   # Environment variables
   gem 'dotenv-rails'
+  # Preview email in the default browser instead of sending it.
+  gem 'letter_opener'
 
   gem 'rubocop', '~> 1.24', require: false
   gem 'rubocop-performance', require: false
