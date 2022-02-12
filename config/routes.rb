@@ -27,5 +27,8 @@ Rails.application.routes.draw do
   resources :attachments, only: :destroy
   resources :links, only: :destroy
 
+  get '/email', to: 'users#email'
+  post '/set_email', to: 'users#set_email'
+
   mount ActionCable.server => '/cable'
 end

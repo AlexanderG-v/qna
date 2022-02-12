@@ -13,7 +13,15 @@ feature 'User can register in the system', "
     fill_in 'Password confirmation', with: '12345678'
     click_button 'Sign up'
 
-    expect(page).to have_content 'You have signed up successfully'
+    open_email('user@test.com')
+    current_email.click_link 'Confirm my account'
+    expect(page).to have_content 'Your email address has been successfully confirmed.'
+
+    fill_in 'Email', with: 'user@test.com'
+    fill_in 'Password', with: '12345678'
+    click_button 'Log in'
+
+    expect(page).to have_content 'Signed in successfully.'    
   end
 
   scenario 'Registered user tries to sign up' do
@@ -58,15 +66,16 @@ feature 'User can register in the system', "
         expect(page).to have_content 'Sign in with Vkontakte'
 
         mock_auth_hash('vkontakte', email: nil)
+
         click_link 'Sign in with Vkontakte'
 
         fill_in 'Enter email', with: 'user@test.com'
         click_on 'Send confirmation to email'
-        
+
         open_email 'user@test.com'
         current_email.click_link 'Confirm my account'
         click_link 'Sign in with Vkontakte'
-
+        
         within '.navbar' do
           expect(page).to have_content 'user@test.com'
         end

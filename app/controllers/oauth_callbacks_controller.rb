@@ -17,8 +17,8 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: provider) if is_navigational_format?
     elsif @user.nil? && !auth.nil?
-      session["devise.#{provider}_data"] = auth.except('extra')
-      redirect_to new_user_registration_path, alert: 'Something went wrong.'
+      session['oauth_data'] = auth.except('extra')
+      redirect_to email_path, alert: 'Your email not found, you need register with set email.'
     else
       redirect_to root_path, alert: 'Something went wrong'
     end

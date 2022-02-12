@@ -43,6 +43,8 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
   # Valid request domains ActionCable
   config.action_cable.disable_request_forgery_protection = true
 
