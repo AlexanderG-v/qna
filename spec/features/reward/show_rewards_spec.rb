@@ -16,9 +16,11 @@ feature 'User can view his rewards', '
     visit root_path
 
     within '.navbar' do
+      page.has_css? 'bi.bi-trophy'
       click_on 'Rewards'
-    end
 
+      # find('bi.bi-trophy').click
+    end
     expect(page).to have_content(reward.name)
     expect(page).to have_content(reward.question.title)
     expect(page).to have_xpath("//img")
@@ -29,6 +31,7 @@ feature 'User can view his rewards', '
     
     within '.navbar' do
       expect(page).to_not have_link 'Rewards'
+      expect(page).to_not have_css '.bi.bi-trophy'
     end
   end
 end

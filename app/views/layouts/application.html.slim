@@ -13,6 +13,7 @@ html
 
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    link[rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"]
   
   body
     = render 'shared/nav'
@@ -20,5 +21,5 @@ html
     .container
       div class="flash-message"
         = render 'shared/flash_message'
-        
+
       = yield
