@@ -19,6 +19,9 @@ module Qna
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # Automatic loading of directories
+    config.autoload_paths += [config.root.join('app')]
+
     # Valid request domains ActionCable
     config.action_cable.disable_request_forgery_protection = false
 

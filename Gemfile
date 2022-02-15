@@ -33,6 +33,9 @@ gem 'aws-sdk-s3', require: false
 
 # AUTH
 gem 'devise', '~> 4.0'
+gem 'omniauth', '~> 1.9.1'
+gem 'omniauth-github'
+gem 'omniauth-vkontakte'
 
 # UI
 gem 'bootstrap', '~> 5.0.1'
@@ -56,6 +59,8 @@ group :development, :test do
   gem 'factory_bot_rails'
   # Environment variables
   gem 'dotenv-rails'
+  # Preview email in the default browser instead of sending it.
+  gem 'letter_opener'
 
   gem 'rubocop', '~> 1.24', require: false
   gem 'rubocop-performance', require: false
@@ -81,6 +86,7 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
   # provides RSpec and Minitest compatible one-liners for testing the general Rails functionality
+  gem 'capybara-email'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
   # auxiliary class for running cross-platform applications
