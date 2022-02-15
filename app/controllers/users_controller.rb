@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: :show_rewards
 
+  authorize_resource
+
   def show_rewards
     @rewards = current_user.rewards
   end

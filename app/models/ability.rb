@@ -1,34 +1,37 @@
-# frozen_string_literal: true
-
 class Ability
   include CanCan::Ability
 
+  attr_reader :user
+
   def initialize(user)
-    # Define abilities for the passed in user here. For example:
-    #
-    user ||= User.new # guest user (not logged in)
-    if user.admin?
-      can :manage, :all
+    @user = user
+
+    if user
+      user.role == 'admin' ? admin_ability : user_ability
     else
-      can :read, :all
+      quest_ability
     end
-    #
-    # The first argument to `can` is the action you are giving the user
-    # permission to do.
-    # If you pass :manage it will apply to every action. Other common actions
-    # here are :read, :create, :update and :destroy.
-    #
-    # The second argument is the resource the user can perform the action on.
-    # If you pass :all it will apply to every resource. Otherwise pass a Ruby
-    # class of the resource.
-    #
-    # The third argument is an optional hash of conditions to further filter the
-    # objects.
-    # For example, here the user can only update published articles.
-    #
-    #   can :update, Article, :published => true
-    #
-    # See the wiki for details:
-    # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
+  end
+
+  def quest_ability
+    can :read, :all
+    can :email, User
+    can :set_email, User
+  end
+
+  def admin_ability
+    can :manage, :all
+  end
+
+  def user_ability
+    quest_ability
+    can :create, [Question, Answer, Comment]
+    can :update, [Question, Answer], { author_id: user.id }
+    can :destroy, [Question, Answer], { author_id: user.id }
+    can :destroy, ActiveStorage::Attachment, record: { author_id: user.id }
+    can :destroy, Link, linkable: { author_id: user.id }
+    can :best_answer, Answer, question: { author_id: user.id }
+    can :show_rewards, User, { author_id: user.id }
+    can :show_rewards, Reward, question: { author_id: user.id }
   end
 end
