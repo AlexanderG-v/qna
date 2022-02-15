@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Ability do
-  subject(:ability) { Ability.new(user) }
+  subject(:ability) { described_class.new(user) }
 
   describe 'for guest' do
     let(:user) { nil }
@@ -55,5 +55,9 @@ RSpec.describe Ability do
     it { should be_able_to :best_answer, create(:answer, question: question, author: other_user) }
     it { should_not be_able_to :best_answer, create(:answer, question: other_question, author: user) }
     it { should_not be_able_to :best_answer, create(:answer, question: other_question, author: other_user) }
+
+    it { should be_able_to :show_rewards, create(:reward, question: question, user: user) }
+    it { should_not be_able_to :show_rewards, create(:reward, question: other_question, user: user) }
+    it { should_not be_able_to :show_rewards, create(:reward, question: other_question, user: other_user) }
   end
 end
