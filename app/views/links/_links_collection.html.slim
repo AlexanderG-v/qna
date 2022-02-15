@@ -7,6 +7,6 @@
         - if link.gist?
           = javascript_include_tag link.url + ".js"
 
-        - if current_user&.author?(link.linkable)
+        - if current_user && can?(:destroy, link.linkable)
           = link_to 'Delete link', link_path(link), method: :delete, remote: true
       
