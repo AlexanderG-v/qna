@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  ROLES = %i[admin author guest].freeze
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
