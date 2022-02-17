@@ -5,6 +5,8 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: %i[show edit update destroy]
   after_action :publish_question, only: %i[create]
 
+  authorize_resource
+
   def index
     @questions = Question.all
     gon.current_user_id = current_user&.id
@@ -37,16 +39,12 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params) if current_user.author?(@question)
+    @question.update(question_params)
   end
 
   def destroy
-    if current_user.author?(@question)
-      @question.destroy
-      redirect_to questions_path, notice: 'Question was successfully deleted'
-    else
-      redirect_to @question, notice: 'You are not the author of the question.'
-    end
+    @question.destroy
+    redirect_to questions_path, notice: 'Question was successfully deleted'
   end
 
   private

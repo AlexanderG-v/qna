@@ -36,8 +36,9 @@
         p = render 'links/link', resource: @question, f: f
       p = f.submit 'Save'
 
-    - if current_user&.author?(@question)
+    - if current_user && can?(:update, @question)
       p = link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: @question.id }
+    - if current_user && can?(:destroy, @question)
       p = link_to 'Delete Question', question_path(@question), method: :delete
 
 .question

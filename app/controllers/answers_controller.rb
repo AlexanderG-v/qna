@@ -6,6 +6,8 @@ class AnswersController < ApplicationController
   before_action :set_question, only: %i[create]
   after_action :publish_answer, only: :create
 
+  authorize_resource
+
   def show; end
 
   def new; end
@@ -17,13 +19,11 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer.update(answer_params) if current_user.author?(@answer)
+    @answer.update(answer_params)
     @question = @answer.question
   end
 
   def destroy
-    return unless current_user&.author?(@answer)
-
     @answer.destroy
     @question = @answer.question
     flash.now[:notice] = 'Answer was successfully deleted'
@@ -31,8 +31,6 @@ class AnswersController < ApplicationController
 
   def best_answer
     @question = @answer.question
-    return unless current_user&.author?(@question)
-
     @question.set_best_answer(@answer)
 
     @best_answer = @question.best_answer

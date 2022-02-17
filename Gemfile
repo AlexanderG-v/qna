@@ -32,6 +32,7 @@ gem 'gon'
 gem 'aws-sdk-s3', require: false
 
 # AUTH
+gem 'cancancan'
 gem 'devise', '~> 4.0'
 gem 'omniauth', '~> 1.9.1'
 gem 'omniauth-github'
