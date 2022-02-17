@@ -28,6 +28,14 @@ Rails.application.routes.draw do
   resources :attachments, only: :destroy
   resources :links, only: :destroy
 
+  namespace :api do
+    namespace :v1 do
+      resources :users, only: [] do
+        get :me, on: :collection
+      end
+    end
+  end
+
   get '/email', to: 'users#email'
   post '/set_email', to: 'users#set_email'
 
