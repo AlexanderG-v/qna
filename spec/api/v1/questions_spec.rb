@@ -47,7 +47,7 @@ describe 'Questions API', type: :request do
           expect(question_response['answers'].size).to eq 3
         end
 
-        it_behaves_like 'API returns all public fields' do
+        it_behaves_like 'API returns all public fields' do # ! REVIEV
           let(:resource) { answers.first }
           let(:resource_response) { question_response['answers'].first }
           let(:public_fields) { %w[id body author_id created_at updated_at] }
@@ -248,6 +248,55 @@ describe 'Questions API', type: :request do
 
           expect(other_question.title).to eq other_old_title
           expect(other_question.body).to eq other_old_body
+        end
+      end
+    end
+  end
+
+  describe 'DELETE /api/v1/questions/:id' do
+    let(:user) { create :user }
+    let!(:question) { create(:question, author: user) }
+    let(:access_token) { create(:access_token, resource_owner_id: user.id) }
+    let(:method) { :delete }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+
+    it_behaves_like 'API Unauthorizable'
+
+    context 'authorized' do
+      context 'author' do
+        it 'deletes the question' do
+          expect do
+            delete api_path, params: { access_token: access_token.token,
+                                       headers: headers }
+          end.to change(Question, :count).by(-1)
+        end
+
+        it 'returns 200 status' do
+          delete api_path, params: { access_token: access_token.token },
+                           headers: headers
+          expect(response).to be_successful
+        end
+
+        it 'returns deleted question json' do
+          delete api_path, params: { access_token: access_token.token },
+                           headers: headers
+
+          %w[id title body created_at updated_at].each do |attr|
+            expect(json['question'][attr]).to eq question.send(attr).as_json
+          end
+        end
+      end
+
+      context 'not author' do
+        let(:other_user) { create(:user) }
+        let(:other_question) { create(:question, author: other_user) }
+        let(:other_api_path) { "/api/v1/questions/#{other_question.id}" }
+
+        it 'does not deletes question' do
+          expect do
+            delete other_api_path, params: { access_token: access_token.token,
+                                             headers: headers }
+          end.to_not change(Question, :count)
         end
       end
     end
