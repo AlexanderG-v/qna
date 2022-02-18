@@ -1,5 +1,5 @@
 class Api::V1::AnswersController < Api::V1::BaseController
-  before_action :set_answer, only: %i[show]
+  before_action :set_answer, only: %i[show update]
   before_action :set_question, only: %i[index show create]
 
   def index
@@ -15,6 +15,14 @@ class Api::V1::AnswersController < Api::V1::BaseController
     @answer = current_resource_owner.answers.new(answer_params.merge(question_id: params[:question_id]))
 
     if @answer.save
+      render json: @answer
+    else
+      render json: { errors: @answer.errors }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @answer.update(answer_params)
       render json: @answer
     else
       render json: { errors: @answer.errors }, status: :unprocessable_entity
