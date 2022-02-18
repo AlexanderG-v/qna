@@ -21,10 +21,10 @@ describe 'Users API', type: :request do
 
       it_behaves_like 'API Authorizable'
 
-      it 'returns all public fields' do
-        %w[id email role created_at updated_at].each do |attr|
-          expect(json['user'][attr]).to eq me.send(attr).as_json
-        end
+      it_behaves_like 'API returns all public fields' do
+        let(:public_fields) { %w[id email role created_at updated_at] }
+        let(:resource) { me }
+        let(:resource_response) { json['user'] }
       end
 
       it 'does not return private fields' do
@@ -63,10 +63,10 @@ describe 'Users API', type: :request do
         end
       end
 
-      it 'returns all public fields' do
-        %w[id email role created_at updated_at].each do |attr|
-          expect(users_response[attr]).to eq user.send(attr).as_json
-        end
+      it_behaves_like 'API returns all public fields' do
+        let(:public_fields) { %w[id email role created_at updated_at] }
+        let(:resource) { users.first }
+        let(:resource_response) { json['users'].first }
       end
 
       it 'does not return private fields' do

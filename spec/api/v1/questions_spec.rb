@@ -29,10 +29,10 @@ describe 'Questions API', type: :request do
         expect(json['questions'].size).to eq 2
       end
 
-      it 'returns all public fields' do
-        %w[id title body created_at updated_at].each do |attr|
-          expect(question_response[attr]).to eq question.send(attr).as_json
-        end
+      it_behaves_like 'API returns all public fields' do
+        let(:public_fields) { %w[id title body created_at updated_at] }
+        let(:resource) { questions.first }
+        let(:resource_response) { json['questions'].first }
       end
 
       it 'contains user object' do
