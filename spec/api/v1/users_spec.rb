@@ -9,7 +9,7 @@ describe 'Users API', type: :request do
   describe 'GET /api/v1/users/me' do
     let(:api_path) { '/api/v1/users/me' }
 
-    it_behaves_like 'API Authorizable' do
+    it_behaves_like 'API Unauthorizable' do
       let(:method) { :get }
     end
 
@@ -19,9 +19,7 @@ describe 'Users API', type: :request do
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
 
-      it 'returns 200 status' do
-        expect(response).to be_successful
-      end
+      it_behaves_like 'API Authorizable'
 
       it 'returns all public fields' do
         %w[id email role created_at updated_at].each do |attr|
@@ -40,7 +38,7 @@ describe 'Users API', type: :request do
   describe 'GET /api/v1/users' do
     let(:api_path) { '/api/v1/users' }
 
-    it_behaves_like 'API Authorizable' do
+    it_behaves_like 'API Unauthorizable' do
       let(:method) { :get }
     end
 
@@ -53,6 +51,8 @@ describe 'Users API', type: :request do
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
 
+      it_behaves_like 'API Authorizable'
+
       it 'returns list of users except me' do
         expect(json['users'].size).to eq users.size
       end
@@ -61,10 +61,6 @@ describe 'Users API', type: :request do
         json['users'].each do |user|
           expect(user['id']).to_not eq me.id
         end
-      end
-
-      it 'returns 200 status' do
-        expect(response).to be_successful
       end
 
       it 'returns all public fields' do
