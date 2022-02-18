@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       resources :users, only: [] do
         get :me, on: :collection
       end
+
+      resources :questions, only: :index
     end
   end
 
