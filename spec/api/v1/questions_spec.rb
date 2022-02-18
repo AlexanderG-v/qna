@@ -30,13 +30,15 @@ describe 'Questions API', type: :request do
       end
 
       it_behaves_like 'API returns all public fields' do
-        let(:public_fields) { %w[id title body created_at updated_at] }
         let(:resource) { questions.first }
         let(:resource_response) { json['questions'].first }
+        let(:public_fields) { %w[id title body created_at updated_at] }
       end
 
-      it 'contains user object' do
-        expect(question_response['author']['id']).to eq question.author.id
+      it_behaves_like 'API contains object' do
+        let(:resource) { questions.first }
+        let(:resource_response) { json['questions'].first }
+        let(:objects) { %w[author] }
       end
 
       it 'contains short title and body' do
@@ -49,10 +51,63 @@ describe 'Questions API', type: :request do
         end
 
         it_behaves_like 'API returns all public fields' do
-          let(:public_fields) { %w[id body author_id created_at updated_at] }
           let(:resource) { answers.first }
           let(:resource_response) { question_response['answers'].first }
+          let(:public_fields) { %w[id body author_id created_at updated_at] }
         end
+      end
+    end
+  end
+
+  describe 'GET /api/v1/questions/:id' do
+    let(:user) { create :user }
+    let(:access_token) { create(:access_token) }
+    let!(:question) { create(:question, :with_reward, :with_files, :with_links, :with_comments, author: user) }
+    let(:method) { :get }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+
+    it_behaves_like 'API Unauthorizable'
+
+    context 'authorized' do
+      let(:resource) { question }
+      let(:resource_response) { json['question'] }
+
+      before { get api_path, params: { access_token: access_token.token }, headers: headers }
+
+      it_behaves_like 'API Authorizable'
+
+      it_behaves_like 'API returns all public fields' do
+        let(:public_fields) { %w[id title body created_at updated_at] }
+      end
+      
+      it_behaves_like 'API contains object' do
+        let(:objects) { %w[author reward] }
+      end
+
+      it_behaves_like 'API returns list of resource' do
+        let(:resource_contents) { %w[comments files links] }
+      end
+
+      context 'question links' do
+        it_behaves_like 'API returns all public fields' do
+          let(:resource) { question.links.first }
+          let(:resource_response) { json['question']['links'].first }
+          let(:public_fields) { %w[id name url created_at updated_at] }
+        end
+      end
+
+      context 'question comments' do
+        it_behaves_like 'API returns all public fields' do
+          let(:resource) { question.comments.first }
+          let(:resource_response) { json['question']['comments'].first }
+          let(:public_fields) { %w[id body user_id created_at updated_at] }
+        end
+      end
+
+      it 'contains files url' do
+        expect(json['question']['files'].first['url']).to eq Rails.application.routes.url_helpers.rails_blob_path(
+          question.files.first, only_path: true
+        )
       end
     end
   end
