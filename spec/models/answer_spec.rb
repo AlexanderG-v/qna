@@ -11,9 +11,7 @@ RSpec.describe Answer, type: :model do
 
   it { should validate_presence_of :body }
 
-  it 'have many attached file' do
-    expect(described_class.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
-  end
+  it_behaves_like 'have many attached file'
 
   it { should have_db_index :body }
 
