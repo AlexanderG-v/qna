@@ -1,7 +1,4 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
-require Rails.root.join('spec/models/concerns/votable_spec.rb')
 
 RSpec.describe Question, type: :model do
   let(:user) { create(:user) }
