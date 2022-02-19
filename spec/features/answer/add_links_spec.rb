@@ -5,7 +5,7 @@ feature 'User can add links to answer', "
   As an question's author
   I'd like to be able to add links
 " do
-  it_behaves_like 'add_comments' do
+  it_behaves_like 'add_links' do
     given(:question) { create :question, author: user }
     given(:button) { 'Answer' }
     given(:resource_class) { '.answers' }

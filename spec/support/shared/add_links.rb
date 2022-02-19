@@ -1,4 +1,4 @@
-shared_examples 'add_comments' do
+shared_examples 'add_links' do
   given(:user) { create(:user) }
   given(:gist_url) { 'https://gist.github.com/AlexanderG-v/ebdb690c69f3bb79b4cf92a502bca73b' }
   given(:other_url) { 'https://github.com/AlexanderG-v' }
