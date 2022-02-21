@@ -26,9 +26,10 @@ class Ability
   def user_ability
     quest_ability
     can :me, User
-    can :create, [Question, Answer, Comment]
+    can :create, [Question, Answer, Comment, Subscription]
     can :update, [Question, Answer], { author_id: user.id }
     can :destroy, [Question, Answer], { author_id: user.id }
+    can :destroy, [Subscription], { user_id: user.id }
     can :destroy, ActiveStorage::Attachment, record: { author_id: user.id }
     can :destroy, Link, linkable: { author_id: user.id }
     can :best_answer, Answer, question: { author_id: user.id }

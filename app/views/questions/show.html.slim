@@ -3,7 +3,11 @@
     h1= @question.title
   .question-body
     h2= @question.body
-    
+
+  .subscription
+    - if current_user && can?(:create, Subscription)
+      = render 'subscriptions/subscription', question: @question
+  br    
   .question-files
     = render 'shared/attachments', resource: @question
   
@@ -35,7 +39,7 @@
       .question_links
         p = render 'links/link', resource: @question, f: f
       p = f.submit 'Save'
-
+    br
     - if current_user && can?(:update, @question)
       p = link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: @question.id }
     - if current_user && can?(:destroy, @question)
