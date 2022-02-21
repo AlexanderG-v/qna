@@ -32,6 +32,9 @@ gem 'active_model_serializers', '~> 0.10'
 # A fast JSON parser
 gem 'oj'
 
+# Simple, efficient background processing for Ruby
+gem 'sidekiq'
+
 gem 'gon'
 
 # Amazon S3
