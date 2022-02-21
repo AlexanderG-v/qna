@@ -1,7 +1,4 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
-require Rails.root.join('spec/models/concerns/votable_spec.rb')
 
 RSpec.describe Question, type: :model do
   let(:user) { create(:user) }
@@ -22,9 +19,7 @@ RSpec.describe Question, type: :model do
   it { should accept_nested_attributes_for :links }
   it { should accept_nested_attributes_for :reward }
 
-  it 'have many attached file' do
-    expect(described_class.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
-  end
+  it_behaves_like 'have many attached file'
   
   describe 'set best answer' do
     let!(:answers) { create_list(:answer, 3, question: question, author: user) }

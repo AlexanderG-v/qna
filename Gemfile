@@ -25,6 +25,12 @@ gem 'jbuilder', '~> 2.7'
 gem 'slim-rails'
 # Working with nested forms
 gem 'cocoon'
+# Simplifies the implementation of OAuth 2 provider features
+gem 'doorkeeper'
+
+gem 'active_model_serializers', '~> 0.10'
+# A fast JSON parser
+gem 'oj'
 
 gem 'gon'
 

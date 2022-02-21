@@ -16,6 +16,12 @@ FactoryBot.define do
       end
     end
 
+    trait :with_comments do
+      after(:create) do |answer|
+        create(:comment, commentable: answer)
+      end
+    end
+
     trait :invalid do
       body { nil }
     end
