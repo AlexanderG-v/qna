@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :votes, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :authorizations, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   def self.find_for_oauth(auth)
     FindForOauthService.new(auth).call
@@ -27,5 +28,9 @@ class User < ApplicationRecord
 
   def voted?(obj)
     votes.where(votable: obj).present?
+  end
+
+  def subscribed?(question)
+    subscriptions.find_by(question_id: question.id)
   end
 end

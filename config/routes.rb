@@ -1,4 +1,10 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  authenticate :user, lambda { |user| user.role == 'admin' } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   use_doorkeeper
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: 'questions#index'
@@ -19,6 +25,7 @@ Rails.application.routes.draw do
       resources :comments, defaults: { commentable: 'answer' }
     end
     resources :comments, defaults: { commentable: 'question' }
+    resources :subscriptions, only: %i[create destroy], shallow: true
   end
 
   resources :users, only: :show_rewards do

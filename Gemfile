@@ -32,6 +32,12 @@ gem 'active_model_serializers', '~> 0.10'
 # A fast JSON parser
 gem 'oj'
 
+# Simple, efficient background processing for Ruby
+gem 'sidekiq'
+gem 'sinatra', require: false
+# Provides syntax for writing cron jobs.
+gem 'whenever', require: false
+
 gem 'gon'
 
 # Amazon S3
