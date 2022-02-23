@@ -38,6 +38,10 @@ gem 'sinatra', require: false
 # Provides syntax for writing cron jobs.
 gem 'whenever', require: false
 
+# Search
+gem 'mysql2'
+gem 'thinking-sphinx'
+
 gem 'gon'
 
 # Amazon S3
