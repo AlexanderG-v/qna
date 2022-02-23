@@ -104,6 +104,7 @@ group :test do
   gem 'webdrivers'
   # provides RSpec and Minitest compatible one-liners for testing the general Rails functionality
   gem 'capybara-email'
+  gem 'database_cleaner-active_record'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
   # auxiliary class for running cross-platform applications
