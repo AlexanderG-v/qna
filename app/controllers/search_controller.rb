@@ -1,8 +1,6 @@
 class SearchController < ApplicationController
   skip_authorization_check
 
-  skip_authorization_check
-
   def search
     search_base = option == 'global' ? ThinkingSphinx : option.capitalize.constantize
 
