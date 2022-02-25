@@ -14,6 +14,10 @@ class User < ApplicationRecord
   has_many :authorizations, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
 
+  ThinkingSphinx::Callbacks.append(
+    self, behaviours: [:sql]
+  )
+
   def self.find_for_oauth(auth)
     FindForOauthService.new(auth).call
   end
