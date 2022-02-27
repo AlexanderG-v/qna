@@ -57,7 +57,6 @@ gem 'omniauth-vkontakte'
 # UI
 gem 'bootstrap', '~> 5.0.1'
 gem 'jquery-rails'
-gem 'mini_racer', '~> 0.6.2'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
