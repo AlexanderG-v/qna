@@ -57,6 +57,7 @@ gem 'omniauth-vkontakte'
 # UI
 gem 'bootstrap', '~> 5.0.1'
 gem 'jquery-rails'
+# gem 'mini_racer', platforms: :ruby
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -99,6 +100,7 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-passenger', require: false
+  gem 'capistrano-sidekiq', require: false
 end
 
 group :test do

@@ -17,4 +17,9 @@ every 1.days, at: '10:00 pm' do
   runner "DailyDigestJop.perform_now"
 end
 
+# Reindexing for sphinx
+every 30.minutes do
+  rake "ts:index"
+end
+
 # Learn more: http://github.com/javan/whenever
