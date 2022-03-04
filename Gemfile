@@ -66,6 +66,7 @@ gem 'mini_racer', platforms: :ruby
 gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'redis'
+gem 'redis-rails'
 
 # Server
 gem 'unicorn'
