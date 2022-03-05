@@ -1,71 +1,72 @@
-.questions
-  .question-title
-    h1= @question.title
-  .question-body
-    h2= @question.body
+- cache @question do
+  .questions
+    .question-title
+      h1= @question.title
+    .question-body
+      h2= @question.body
 
-  .subscription
-    - if current_user && can?(:create, Subscription)
-      = render 'subscriptions/subscription', question: @question
-  br    
-  .question-files
-    = render 'shared/attachments', resource: @question
-  
-  .question-reward
-    = render 'rewards/reward', resource: @question
-  
-  .links
-    = render 'links/links_collection', resource: @question
+    .subscription
+      - if current_user && can?(:create, Subscription)
+        = render 'subscriptions/subscription', question: @question
+    br    
+    .question-files
+      = render 'shared/attachments', resource: @question
+    
+    .question-reward
+      = render 'rewards/reward', resource: @question
+    
+    .links
+      = render 'links/links_collection', resource: @question
 
-  .rating
-    = render 'shared/rating', resource: @question
+    .rating
+      = render 'shared/rating', resource: @question
 
-    - if @best_answer.present?
-      h3= @question.best_answer.body
+      - if @best_answer.present?
+        h3= @question.best_answer.body
+
+    - if user_signed_in?
+      .question-errors
+        = render 'shared/errors', resource: @question
+      = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}" }, local: false do |f|
+        p
+          - f.label :title
+          = f.text_field :title
+        p
+          - f.label :body
+          = f.text_area :body
+        p
+          - f.label :files
+          = f.file_field :files, multiple: true, direct_upload: true
+        .question_links
+          p = render 'links/link', resource: @question, f: f
+        p = f.submit 'Save'
+      br
+      - if current_user && can?(:update, @question)
+        p = link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: @question.id }
+      - if current_user && can?(:destroy, @question)
+        p = link_to 'Delete Question', question_path(@question), method: :delete
+
+  .question
+    div class="question-#{@question.id}-comments"
+      = render 'comments/comments', resource: @question
+
+    
+  h3 All answer
+
+  .answers
+    = render @question.answers
 
   - if user_signed_in?
-    .question-errors
-      = render 'shared/errors', resource: @question
-    = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}" }, local: false do |f|
-      p
-        - f.label :title
-        = f.text_field :title
-      p
-        - f.label :body
-        = f.text_area :body
-      p
-        - f.label :files
-        = f.file_field :files, multiple: true, direct_upload: true
-      .question_links
-        p = render 'links/link', resource: @question, f: f
-      p = f.submit 'Save'
-    br
-    - if current_user && can?(:update, @question)
-      p = link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: @question.id }
-    - if current_user && can?(:destroy, @question)
-      p = link_to 'Delete Question', question_path(@question), method: :delete
+    h4= 'Your Answer'
+    .answer-errors
+      = render 'shared/errors', resource: @answer
+    = form_with model: [@question, @answer], local: false, class: 'new-answer' do |f|
+      - f.label :body
+      p = f.text_area :body
+      - f.label :files
+      p = f.file_field :files, multiple: true, direct_upload: true
 
-.question
-  div class="question-#{@question.id}-comments"
-    = render 'comments/comments', resource: @question
+      .answer_links
+        = render 'links/link', resource: @answer, f: f
 
-  
-h3 All answer
-
-.answers
-  = render @question.answers
-
-- if user_signed_in?
-  h4= 'Your Answer'
-  .answer-errors
-    = render 'shared/errors', resource: @answer
-  = form_with model: [@question, @answer], local: false, class: 'new-answer' do |f|
-    - f.label :body
-    p = f.text_area :body
-    - f.label :files
-    p = f.file_field :files, multiple: true, direct_upload: true
-
-    .answer_links
-      = render 'links/link', resource: @answer, f: f
-
-    p = f.submit 'Answer'
+      p = f.submit 'Answer'

@@ -1,39 +1,40 @@
 - if answer.persisted?
-  table
-    tr class='.other-answers'
-      td= answer.body
-      - if current_user&.author?(@question) && (current_user && can?(:best_answer, answer))
-        td= link_to 'Best answer', best_answer_answer_path(answer), method: :post, remote: true
-      - if current_user && can?(:update, answer)
-        td= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-      - if current_user && can?(:destroy, answer)
-        td= link_to 'Delete answer',
-                    answer_path(answer),
-                    method: :delete, 
-                    remote: true
+  - cache answer do
+    table
+      tr class='.other-answers'
+        td= answer.body
+        - if current_user&.author?(@question) && (current_user && can?(:best_answer, answer))
+          td= link_to 'Best answer', best_answer_answer_path(answer), method: :post, remote: true
+        - if current_user && can?(:update, answer)
+          td= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+        - if current_user && can?(:destroy, answer)
+          td= link_to 'Delete answer',
+                      answer_path(answer),
+                      method: :delete, 
+                      remote: true
 
-    tr class="answer-id-#{answer.id}"
-      td class='rating'
-        = render 'shared/rating', resource: answer
+      tr class="answer-id-#{answer.id}"
+        td class='rating'
+          = render 'shared/rating', resource: answer
 
-    tr
-      td class="answer-#{answer.id}-comments"
-        = render 'comments/comments', resource: answer
+      tr
+        td class="answer-#{answer.id}-comments"
+          = render 'comments/comments', resource: answer
 
-  .links
-    = render 'links/links_collection', resource: answer
-  
-  p= form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
-    .edit-answer-errors
-      div class=["answer-error-#{answer.id}"]
-      p 
-        - f.label :body
-        = f.text_area :body
-      p
-        - f.label :files
-        = f.file_field :files, multiple: true, direct_upload: true
-      p = render 'links/link', resource: @question, f: f
-      p = f.submit 'Save'
+    .links
+      = render 'links/links_collection', resource: answer
+    
+    p= form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
+      .edit-answer-errors
+        div class=["answer-error-#{answer.id}"]
+        p 
+          - f.label :body
+          = f.text_area :body
+        p
+          - f.label :files
+          = f.file_field :files, multiple: true, direct_upload: true
+        p = render 'links/link', resource: @question, f: f
+        p = f.submit 'Save'
 
-  p= render 'shared/attachments', resource: answer
-hr
+    p= render 'shared/attachments', resource: answer
+  hr
